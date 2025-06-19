@@ -1,25 +1,26 @@
 import { FaInfoCircle } from "react-icons/fa";
-
-const logs = [
-  {
-    status: "success",
-    date: new Date().toLocaleString(),
-    server_response: "Ping cai deo gi ???",
-  },
-  {
-    status: "success",
-    date: new Date().toLocaleString(),
-    server_response: "Ping cai deo gi ???",
-  },
-  {
-    status: "success",
-    date: new Date().toLocaleString(),
-    server_response: "Ping cai deo gi ???",
-  },
-];
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Ping() {
-  return (
+  const [logs, setLog] = useState([{'status': '', 'pingTime': '', 'log': ''}]);
+
+  useEffect(() => {
+    const fetchLog = async () => {
+      try {
+        const res = await axios.get("http://127.0.0.1:8080/api/monitor");
+        setLog(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchLog();
+    const interval = setInterval(fetchLog, 100000);
+    return () => clearInterval(interval);
+  }, []);
+
+    return (
     <>
       {logs.map((log, index) => (
         <div
@@ -28,12 +29,12 @@ export default function Ping() {
         >
           <div className="relative inline-flex">
             <time className="select-none hover:status-highlight-background">
-              {new Date(log.date).toLocaleTimeString([], {
+              {new Date(log.pingTime).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",
               })}{" "}
-              {new Date(log.date).toLocaleDateString()}
+              {new Date(log.pingTime).toLocaleDateString()}
             </time>
           </div>
 
@@ -50,13 +51,13 @@ export default function Ping() {
           </span>
 
           <div className="relative inline-flex">
-            <span className="text-yellow-200 whitespace-pre-wrap select-none">
-              {log.server_response}
+            <span className="text-green-500 whitespace-pre-wrap select-none">
+              {log.status}
             </span>
           </div>
 
           <span className="whitespace-pre-wrap break-all">
-            {log.server_response}
+            {log.log}
           </span>
         </div>
       ))}

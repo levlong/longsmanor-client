@@ -38,7 +38,7 @@ export default function PingContainer() {
         </div>
 
         <div className="custom-scrollbar flex-1 flex flex-col pt-1 pb-4 overflow-y-scroll">
-            <Ping />
+          <Ping />
         </div>
       </div>
     </div>
