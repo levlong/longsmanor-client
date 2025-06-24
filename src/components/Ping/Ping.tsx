@@ -3,12 +3,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Ping() {
-  const [logs, setLog] = useState([{'status': '', 'pingTime': '', 'log': ''}]);
+  const [logs, setLog] = useState([{'status': '', 'logMessage': '', 'timePinged': ''}]);
 
   useEffect(() => {
     const fetchLog = async () => {
       try {
-        const res = await axios.get("/api/monitor");
+        const res = await axios.get("http://localhost:8080/api/monitor");
         setLog(res.data);
       } catch (error) {
         console.log(error);
@@ -29,12 +29,12 @@ export default function Ping() {
         >
           <div className="relative inline-flex">
             <time className="select-none hover:status-highlight-background">
-              {new Date(log.pingTime).toLocaleTimeString([], {
+              {new Date(log.timePinged).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",
               })}{" "}
-              {new Date(log.pingTime).toLocaleDateString()}
+              {new Date(log.timePinged).toLocaleDateString()}
             </time>
           </div>
 
@@ -57,7 +57,7 @@ export default function Ping() {
           </div>
 
           <span className="whitespace-pre-wrap break-all">
-            {log.log}
+            {log.logMessage}
           </span>
         </div>
       ))}
