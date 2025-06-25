@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="max-w-4xl mx-auto text-center py-10">
+    <div className="max-w-4xl mx-auto text-center pt-24">
       <h2 className="text-4xl font-bold text-gray-800 mb-4">
         Hi, bạn nhỏ
       </h2>

@@ -3,7 +3,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Ping() {
-  const [logs, setLog] = useState([{'status': '', 'logMessage': '', 'timePinged': ''}]);
+  const [logs, setLog] = useState([
+    { status: "Not known", logMessage: "Yeh", timePinged: "Today" },
+  ]);
 
   useEffect(() => {
     const fetchLog = async () => {
@@ -20,47 +22,41 @@ export default function Ping() {
     return () => clearInterval(interval);
   }, []);
 
-    return (
-    <>
+  return (
+    <div className="space-y-2 px-4 py-2">
       {logs.map((log, index) => (
         <div
           key={index}
-          className="type-mono-00 text-primary group relative space-x-4 page-primary px-3 py-1"
+          className="text-sm md:text-base text-gray-800 bg-gray-100 rounded-md px-3 py-2 flex flex-wrap items-center gap-3 border border-gray-200 shadow-sm"
         >
-          <div className="relative inline-flex">
-            <time className="select-none hover:status-highlight-background">
-              {new Date(log.timePinged).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-              })}{" "}
-              {new Date(log.timePinged).toLocaleDateString()}
-            </time>
-          </div>
+          {/* Time */}
+          <time className="text-gray-500 font-mono min-w-[160px]">
+            {new Date(log.timePinged).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            })}{" "}
+            {new Date(log.timePinged).toLocaleDateString()}
+          </time>
 
-          <span className="inline-flex space-x-1 uppercase group/line-level relative mr-2">
-            <svg
-              fill="currentColor"
-              className="inline w-3 h-3 translate-y-px log-line-info-icon"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-            >
-              <FaInfoCircle />
-            </svg>
+          {/* Icon */}
+          <FaInfoCircle className="text-blue-500 shrink-0" />
+
+          {/* Status */}
+          <span
+            className={`font-semibold ${
+              log.status?.toLowerCase().includes("success")
+                ? "text-green-600"
+                : "text-yellow-600"
+            }`}
+          >
+            {log.status}
           </span>
 
-          <div className="relative inline-flex">
-            <span className="text-green-500 whitespace-pre-wrap select-none">
-              {log.status}
-            </span>
-          </div>
-
-          <span className="whitespace-pre-wrap break-all">
-            {log.logMessage}
-          </span>
+          {/* Message */}
+          <span className="break-words">{log.logMessage}</span>
         </div>
       ))}
-    </>
+    </div>
   );
 }
