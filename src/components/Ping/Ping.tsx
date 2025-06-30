@@ -13,7 +13,7 @@ export default function Ping() {
     const fetchLog = async () => {
       try {
         const res = await axios.get("https://thelong.xyz/api/monitor");
-        const limitedLogs = res.data.slice(0, 30);
+        const limitedLogs = res.data.slice(-30);
         setLog(limitedLogs);
       } catch (error) {
         console.log(error);
