@@ -12,8 +12,7 @@ export default function Ping() {
   useEffect(() => {
     const fetchLog = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/monitors");
-        console.log(res)
+        const res = await axios.get("/api/monitors");
         const limitedLogs = res.data._embedded.pingList.slice(-30);
         setLog(limitedLogs);
       } catch (error) {
