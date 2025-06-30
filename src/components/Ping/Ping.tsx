@@ -1,8 +1,10 @@
 import { FaInfoCircle } from "react-icons/fa";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Ping() {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
   const [logs, setLog] = useState([
     { status: "Not known", logMessage: "Yeh", timePinged: "Today" },
   ]);
@@ -10,17 +12,21 @@ export default function Ping() {
   useEffect(() => {
     const fetchLog = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/monitor");
-        setLog(res.data);
+        const res = await axios.get("https://thelong.xyz/api/monitor");
+        const limitedLogs = res.data.slice(0, 30);
+        setLog(limitedLogs);
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchLog();
     const interval = setInterval(fetchLog, 100000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });;
+  }, [logs]);
 
   return (
     <div className="space-y-2 px-4 py-2">
@@ -57,6 +63,7 @@ export default function Ping() {
           <span className="break-words">{log.logMessage}</span>
         </div>
       ))}
+      <div ref={bottomRef} />
     </div>
   );
 }

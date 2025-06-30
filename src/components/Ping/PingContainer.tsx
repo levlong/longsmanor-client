@@ -4,8 +4,8 @@ import Ping from "./Ping";
 export default function PingContainer() {
   return (
     <div className="pt-24 sm:p-12 md:p-8 lg:p-12 bg-gray-50 min-h-screen">
-      <div className="relative border border-gray-200 bg-white flex flex-col w-full h-full min-h-[400px] rounded-lg shadow">
-        {/* Header */}
+      <div className="relative border border-gray-200 bg-white flex flex-col w-full h-full min-h-[400px] rounded-lg shadow mt-10">
+        {/* Header Box */}
         <div className="border-b border-gray-200 px-3 py-3">
           <div className="flex flex-wrap gap-2">
             {/* Dropdown - All logs */}
@@ -29,7 +29,7 @@ export default function PingContainer() {
         </div>
 
         {/* Ping log content */}
-        <div className="flex-1 flex flex-col pt-1 pb-4 overflow-y-auto scroll-auto">
+        <div className="flex-1 flex flex-col pt-1 pb-4 overflow-y-auto scroll-auto max-h-[600px]">
           <Ping />
         </div>
       </div>
