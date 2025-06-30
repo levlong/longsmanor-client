@@ -10,7 +10,7 @@ export default function Ping() {
   useEffect(() => {
     const fetchLog = async () => {
       try {
-        const res = await axios.get("/api/monitor");
+        const res = await axios.get("http://localhost:8080/api/monitor");
         setLog(res.data);
       } catch (error) {
         console.log(error);

@@ -2,7 +2,7 @@ export default function Soon() {
   return (
     <div className="flex flex-col items-center max-w-4xl mx-auto text-center pt-64">
       <img
-        src="/src/assets/comming.png"
+        src="/images/comming.png"
         alt="working hard"
         className="w-48 h-48 mb-6 animate-bounce"
       />
