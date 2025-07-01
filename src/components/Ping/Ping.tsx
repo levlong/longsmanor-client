@@ -2,7 +2,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 
-export default function Ping() {
+export default function Ping({ externalLogs }: { externalLogs?: any[] }) {
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const [logs, setLog] = useState([
@@ -10,6 +10,11 @@ export default function Ping() {
   ]);
 
   useEffect(() => {
+    if (externalLogs) {
+      setLog(externalLogs);
+      return;
+    }
+
     const fetchLog = async () => {
       try {
         const res = await axios.get("/api/monitors");
@@ -19,13 +24,14 @@ export default function Ping() {
         console.log(error);
       }
     };
+
     fetchLog();
     const interval = setInterval(fetchLog, 100000);
     return () => clearInterval(interval);
-  }, []);
+  }, [externalLogs]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });;
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [logs]);
 
   return (
