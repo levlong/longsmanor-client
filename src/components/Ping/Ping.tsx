@@ -17,8 +17,8 @@ export default function Ping({ externalLogs }: { externalLogs?: any[] }) {
 
     const fetchLog = async () => {
       try {
-        const res = await axios.get("https://thelong.xyz/api/monitors");
-        const limitedLogs = res.data._embedded.pingList.slice(0, 30);
+        const res = await axios.get("/api/monitors");
+        const limitedLogs = res.data._embedded.pingList.slice(-30);
         setLog(limitedLogs);
       } catch (error) {
         console.log(error);
